@@ -1,8 +1,6 @@
 package components;
 
-public class Status {
-    //1.3
-    enum stat {CREATION, COLLECTION, BRANCH_STORAGE, HUB_TRANSPORT, HUB_STORAGE, BRANCH_TRANSPORT, DELIVERY, DISTRIBUTION,DELIVERED};
+enum Status {CREATION, COLLECTION, BRANCH_STORAGE, HUB_TRANSPORT, HUB_STORAGE, BRANCH_TRANSPORT, DELIVERY, DISTRIBUTION, DELIVERED};
 
     /*1.3.	Status – enum שכולל רשימת סטטוסים התואמים לשלבי המשלוח. השלבים הם:
 יצרית חבילה (CREATION) – סטטוס התחלתי של כל חבילה שנוצרת.
@@ -15,6 +13,3 @@ public class Status {
 חלוקה (DISTRIBUTION) – החבילה בדרך מסניף היעד ללקוח הסופי.
 נמסר (DELIVERED) – החבילה נמסרה ללקוח הסופי.
 */
-
-
-}

@@ -8,12 +8,16 @@ public class Address {
     public int street;
     //Ctor
     //1.5.2
+    public Address(){};
+
     public Address(int zip,int street){
-        this.zip=Math.abs(zip);
-        if(0<street && street<1000000)
-            this.street=street;
-        else
-            street=111111;//defult address;
+        this.setZip(zip);
+        this.setStreet(street);
+    }
+
+    @Override
+    public String toString() {
+        return "Address"+"zip=" + zip +"-"+ street;
     }
 
     //setters/getters
@@ -21,12 +25,15 @@ public class Address {
         return zip;
     }
     public void setZip(int zip) {
-        this.zip = zip;
+        this.zip=Math.abs(zip);
     }
     public int getStreet() {
         return street;
     }
     public void setStreet(int street) {
-        this.street = street;
+        if(100000<street && street<1000000)
+            this.street=street;
+        else
+            this.street=111111;//defult address;
     }
 }

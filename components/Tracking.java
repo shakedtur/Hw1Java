@@ -8,23 +8,36 @@ public class Tracking {
     public Status status;
     //Ctor
     //1.1.2
+    public Tracking(){};
+
     public Tracking(int time,Node node,Status status){
-        this.time=time;
+        setTime(time);
         this.node=node;
-        this.status=status;
+        if(status!=Status.CREATION)
+            this.status=status;
+        else
+            this.status=Status.CREATION;
     }
 
     //methods:
     //1.1.3
     //TODO
 
-    
+    @Override
+    public String toString() {
+        return "Tracking{" +
+                "time=" + time +
+                ", node=" + node +
+                ", status=" + status +
+                '}';
+    }
+
     //getters /setters
     public int getTime() {
         return time;
     }
     public void setTime(int time) {
-        this.time = time;
+        this.time=Math.abs(time);
     }
     public Node getNode() {
         return node;
