@@ -4,7 +4,7 @@ import components.Node;
 import components.Status;
 import components.Tracking;
 
-
+import java.util.Random;
 
 
 public class HW1 {
@@ -29,6 +29,13 @@ public class HW1 {
 //        test.printTracking();
 //        System.out.println(test2);
         //test.printTracking();
+//        Truck t1=new Truck();
+//        Truck t2=new Truck();
+        Van v=new Van();
+        System.out.println(v);
+        System.out.println();
+
+
     }
 
 }
