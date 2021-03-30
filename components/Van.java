@@ -1,8 +1,13 @@
 package components;
 
+import java.util.Arrays;
+
 public class Van extends Truck implements Node{
     //Ctor2.6.2
-    public Van(){}
+    public int test;
+
+    public Van(){
+    }
     public Van(String licensePlate,String truckModel){
         super(licensePlate,truckModel);
     }
@@ -28,5 +33,18 @@ public class Van extends Truck implements Node{
             }
 
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Van{" +
+                "truckID=" + truckID +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", truckModel='" + truckModel + '\'' +
+                ", available=" + available +
+                ", timeLeft=" + timeLeft +
+                ", ArratList=" + Arrays.toString(ArratList) +
+                ", test=" + test +
+                '}';
     }
 }

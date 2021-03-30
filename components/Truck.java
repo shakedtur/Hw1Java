@@ -30,6 +30,7 @@ public abstract class Truck {
         available=true;
         timeLeft=0;
         ArratList=null;
+
     }
     public Truck(String licensePlate,String truckModel){
         truckID=numTruck++;

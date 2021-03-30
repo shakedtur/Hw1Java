@@ -31,9 +31,13 @@ public class HW1 {
         //test.printTracking();
 //        Truck t1=new Truck();
 //        Truck t2=new Truck();
-        Van v=new Van();
-        System.out.println(v);
-        System.out.println();
+        NonStandardTruck tr=new NonStandardTruck();
+        Van v1=new Van("234-56-678","A5");
+
+        System.out.println(tr);
+        System.out.println(v1);
+
+
 
 
     }

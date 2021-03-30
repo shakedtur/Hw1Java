@@ -1,35 +1,52 @@
 package components;
 
 public class StandardTruck extends Truck implements Node {
-	
-	public int maxWeight;
-	public Branch destination;
-	
-	public StandardTruck() {
-		// TODO Auto-generated constructor stub
-	}
+    //Fields 2.7.1
+    public int maxWeight;
+    public Branch destination;
+    //Ctor 2.7.2
+    public StandardTruck(){
+        super();
+    }
 
-	public StandardTruck(String licensePlate,String truckModel,int maxWeight) {
-        this.licensePlate=licensePlate;
-        this.truckModel=truckModel;
-        this.maxWeight = maxWeight;
-	}
-	
-	@Override
-	public void collectPackage(Package p) {
-		// TODO Auto-generated method stub
-		
-	}
+    public StandardTruck(String licensePlate,String truckModel,int maxWeight){
+        super(licensePlate,truckModel);
+        setMaxWeight(maxWeight);
+    }
 
-	@Override
-	public void deliverPackage(Package p) {
-		// TODO Auto-generated method stub
-		
-	}
+    //methods 2.7.3
 
-	@Override
-	public void work() {
-		// TODO Auto-generated method stub
-		
-	}
+
+    @Override
+    public void collectPackage(Package p) {
+        //TODO
+    }
+
+    @Override
+    public void deliverPackage(Package p) {
+//TODO
+    }
+
+    @Override
+    public void work() {
+//TODO
+    }
+
+    public int getMaxWeight() {
+        return maxWeight;
+    }
+
+    public void setMaxWeight(int maxWeight) {
+        this.maxWeight = Math.abs(maxWeight);
+    }
+
+    public Branch getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Branch destination) {
+        this.destination = destination;
+    }
+
+
 }
