@@ -8,8 +8,18 @@ public class StandardPackage extends Package{
     public StandardPackage (Priority priority, Address senderAddress, Address destinationAdress,double weight){
         super(priority,senderAddress,destinationAdress);
         this.weight=weight;
+
     }
     //methos2.3.3
+
+    @Override
+    public String toString() {
+        return super.toString()+
+                ","+
+                "weight=" + weight +
+                ']';
+    }
+
     public double getWeight() {
         return weight;
     }

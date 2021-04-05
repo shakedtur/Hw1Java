@@ -34,12 +34,12 @@ public class Hub extends Branch implements Node{
     }
     @Override
     public void collectPackage(Package p) {
-        //super.collectPackage(p);
+        super.collectPackage(p);
     }
 
     @Override
     public void deliverPackage(Package p) {
-       // super.deliverPackage(p);
+       super.deliverPackage(p);
     }
 
     public boolean matchbrunch(int b,Package p){

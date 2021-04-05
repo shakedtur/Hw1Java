@@ -8,7 +8,12 @@ public class Tracking {
     public Status status;
     //Ctor
     //1.1.2
-    public Tracking(){};
+    public Tracking(){
+        setTime(MainOffice.getClock());
+        this.node=null;
+        this.status=Status.CREATION;
+
+    };
 
     public Tracking(int time,Node node,Status status){
         setTime(time);
@@ -25,11 +30,21 @@ public class Tracking {
 
     @Override
     public String toString() {
-        return "Tracking{" +
-                "time=" + time +
-                ", node=" + node +
-                ", status=" + status +
-                '}';
+        String nodetype="Costumer";
+        if(this.node instanceof Branch){
+            nodetype=((Branch)node).getBranchName();
+        }
+        else if(this.node instanceof Truck){
+            if(this.node instanceof Van)
+                nodetype="Van "+((Truck) node).getTruckID();
+            else if(this.node instanceof StandardTruck)
+                nodetype="StandardTruck "+((Truck) node).getTruckID();
+            else if(this.node instanceof NonStandardTruck)
+                nodetype="NonStandardTruck "+((Truck) node).getTruckID();
+
+        }
+
+        return time + ": " + nodetype + ", status=" + status;
     }
 
     //getters /setters

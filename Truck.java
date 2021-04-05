@@ -19,9 +19,9 @@ public abstract class Truck implements Node {
 //        Random r=new Random();
 //        truckModel="M"+(String)((int)(Math.random()*4));
 //        int first,middle,last;
-        truckID=numTruck++;
+        truckID=(numTruck++);
         Random r=new Random();
-        int n=r.nextInt(4);
+        int n=r.nextInt(5);
         truckModel=("M"+n);
         int f,m,l;
         f=r.nextInt(1000);//first
@@ -33,8 +33,9 @@ public abstract class Truck implements Node {
         packNum=5;
         ArratList=new Package[packNum];
         for (int i=0;i<ArratList.length;i++){
-            ArratList[i]=null;
+            ArratList[i]=new Package();
         }
+        packNum=0;
 
     }
     public Truck(String licensePlate,String truckModel){
@@ -43,24 +44,42 @@ public abstract class Truck implements Node {
         this.truckModel=truckModel;
         available=true;
         timeLeft=0;
-        ArratList=null;
+        packNum=5;
+        ArratList=new Package[packNum];
+        packNum=0;
 
     }
     //methods 2.5.3
     @Override
     public String toString() {
-        return "Truck[" +
+        return "["+
                 "truckID=" + truckID +
                 ", licensePlate='" + licensePlate + '\'' +
                 ", truckModel='" + truckModel + '\'' +
-                ", available=" + available +
-                ", timeLeft=" + timeLeft +
-                ", ArratList=" + Arrays.toString(ArratList) +
-                ']';
+                ", available=" + available ;
+                //", timeLeft=" + timeLeft +
+                //", ArratList=" + Arrays.toString(ArratList) +
+                //']';
+
     }
 
     @Override
     public void collectPackage(Package p) {
+        if(packNum<ArratList.length) {
+            ArratList[packNum] = p;
+        }
+        else{
+            Package[] temp=new Package[ArratList.length+5];
+            for (int i=0;i<temp.length;i++){
+                if(i<ArratList.length)
+                    temp[i]=ArratList[i];
+                else if(i==ArratList.length)
+                    temp[i]=p;
+                else
+                    temp[i]=new Package();
+            }
+            ArratList=temp;
+        }
 
     }
 
@@ -68,6 +87,10 @@ public abstract class Truck implements Node {
     public void deliverPackage(Package p) {
 //        p.addTracking(this.timeLeft,this,Status.DELIVERED);
 //        this.available=true;
+        for(int i=0;ArratList[i]!=null && i<ArratList.length;i++){
+            if(ArratList[i].equals(p))
+                ArratList[i]=null;
+        }
     }
 
     @Override

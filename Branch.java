@@ -2,7 +2,7 @@ package components;
 
 public class Branch implements Node {
     //Fields 2.8.1
-    private static int numBranch=0;
+    private static int numBranch=-1;
     public int branchId;
     public /*static*/ String branchName;
     public Truck[] listTrucks;
@@ -13,13 +13,20 @@ public class Branch implements Node {
         branchId=numBranch++;
         branchName=("branch"+branchId);
         listTrucks=null;
-        listPackages=null;
+        listPackages=new Package[10];
+        for (int i=0;i<listPackages.length;i++){
+            listPackages[i]=null;
+        }
+
     }
     public Branch(String branchName){
         branchId=numBranch++;
         this.branchName=(branchName);
         listTrucks=null;
-        listPackages=null;
+        listPackages=new Package[10];
+        for (int i=0;i<listPackages.length;i++){
+            listPackages[i]=new Package();//לשנות לnull
+        }
     }
     //methods 2.8.3
     public void addVans(int numV){
@@ -31,25 +38,47 @@ public class Branch implements Node {
 
     @Override
     public void collectPackage(Package p) {
-        //TODO
+        for(int m=0;m<=listPackages.length;m++) {
+            if(m==listPackages.length) {//in case the memory of package arr done
+                Package[] temp = new Package[listPackages.length + 5];
+                for (int i = 0; i < temp.length; i++) {
+                    if (i < listPackages.length)
+                        temp[i] = listPackages[i];
+//                    else if (i == listPackages.length)
+//                        temp[i] = p;
+                    else
+                        temp[i] = null;
+                }
+                listPackages = temp;
+            }
+            if (listPackages[m]==null) {
+                listPackages[m]=p;
+                break;
+            }
+
+        }
     }
 
     @Override
     public void deliverPackage(Package p) {
-        //TODO
+
+        for(int i=0;listPackages[i]!=null && i<listPackages.length;i++){
+            if(listPackages[i].equals(p))
+                listPackages[i]=null;
+        }
     }
 
     @Override
     public void work() {
         //todo check bugs
-        for(int i=0;i<listPackages.length;i++) {
+        for(int i=0;listPackages[i]!=null&& i<listPackages.length;i++) {
             if (listPackages[i].getStatus() == Status.CREATION) {
                 int j = 0;
                 while (listTrucks[j].available == false) {
                     j++;
                 }
                 if (j == listTrucks.length)
-                    System.out.println("there is no avilavbe trucks");
+                    System.out.println("there is no avilavbe trucks"+getBranchName());
                 listTrucks[j].collectPackage(listPackages[i]);
                 this.deliverPackage(listPackages[i]);//מסירה מהסניף
 
@@ -59,10 +88,9 @@ public class Branch implements Node {
                 listTrucks[j].setTimeLeft(calctime);
                 listTrucks[j].setAvailable(false);
 
-
             }
         }
-        for(int n=0;n<listPackages.length;n++){
+        for(int n=0;listPackages[n]!=null &&n<listPackages.length;n++){
             if(listPackages[n].getStatus()==Status.DELIVERY){
                 int m=0;
                 while (listTrucks[m].available == false) {

@@ -16,19 +16,28 @@ public class MainOffice {
         this.hub.addHubTrucks(truckForBranch+1);
         this.hub.addHubBranchs(branches,truckForBranch);
         this.amountPack=0;
-        this.ArrayList=new Package[(clock/5+1)];
+        this.ArrayList=new Package[(60/5+1)];
     }
 
     //methods2.9.6
 
     public void play(int playTime){
+        this.ArrayList=new Package[(playTime/5+1)];
         for(int i=0;i<playTime;i++){
             tick();
         }
+        System.out.println("==========STOP==============");
+        this.printReport();
     }
     public void printReport(){
         //TODO
         System.out.println("TODO printReport");
+        for(Package pack: this.ArrayList){
+            if(pack!=null) {
+                System.out.println("Tracking" + pack.toString());
+                pack.printTracking();
+            }
+        }
     }
 
     public void tick(){
@@ -66,6 +75,7 @@ public class MainOffice {
             // להשלים העברת חבילות לסניפים (שורות אחרונת בדף הוראות)
             case 0://samll package
                 SmallPackage newpackage=new SmallPackage(allpri[packprri],send,dest,ack);
+                System.out.println("Creating Small "+newpackage);
                 this.ArrayList[amountPack++]=newpackage;
                 hub.ArrayList[send.getZip()].collectPackage(newpackage);//belonging new package to loacl brunch by zip number
 
@@ -73,6 +83,8 @@ public class MainOffice {
             case 1://standar package
                 int wieghrand= rand.nextInt(10)+1;
                 StandardPackage newstand= new StandardPackage(allpri[packprri],send,dest,wieghrand);
+                System.out.println("Creating Standard " +newstand);
+
                 this.ArrayList[amountPack++]=newstand;
                 hub.ArrayList[send.getZip()].collectPackage(newstand);//belonging new pack to local brunch by zip number
 
@@ -82,6 +94,8 @@ public class MainOffice {
                 int w=rand.nextInt(500);
                 int l=rand.nextInt(1000);
                 NonStandardPackage newnonstand=new NonStandardPackage(allpri[packprri],send,dest,w,l,h);
+                System.out.println("Creating NonStandard" +newnonstand);
+
                 this.ArrayList[amountPack++]=newnonstand;
                 hub.collectPackage(newnonstand);//העברה למכרז מיון חבילות לא סטדנרטיות
                 break;

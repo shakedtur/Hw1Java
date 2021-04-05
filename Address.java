@@ -17,7 +17,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address"+"zip=" + zip +"-"+ street;
+        return zip +"-"+ street;
     }
 
     //setters/getters
