@@ -14,4 +14,12 @@ public class SmallPackage extends Package {
     public void setAcknowledge(boolean fitback){
         this.acknowledge=fitback;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ","+
+                "acknowledge=" + acknowledge +
+                ']';
+    }
 }

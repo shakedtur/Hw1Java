@@ -31,11 +31,36 @@ public class HW1 {
         //test.printTracking();
 //        Truck t1=new Truck();
 //        Truck t2=new Truck();
-        NonStandardTruck tr=new NonStandardTruck();
-        Van v1=new Van("234-56-678","A5");
 
-        System.out.println(tr);
-        System.out.println(v1);
+//       Address sender=new Address(2,123456);
+//     Address dester=new Address(3,98765);
+//
+//       Branch br=new Branch();
+//       //Truck v1=new StandardTruck();
+//       Package p=new SmallPackage(Priority.HIGHT,sender,dester,true);
+//        Package p2=new SmallPackage(Priority.LOW,sender,dester,true);
+//        Package p3=new SmallPackage(Priority.STANDARD,sender,dester,true);
+//        Package p4=new SmallPackage(Priority.STANDARD,sender,dester,true);
+
+
+
+
+        //v1.setTimeLeft(3);
+        //v1.setAvailable(false);
+//        br.collectPackage(p);
+//        br.collectPackage(p2);
+//        br.collectPackage(p3);
+//        br.collectPackage(p4);
+
+//        for (int l=0;l<8;l++){
+//            br.work();
+//
+//        }
+
+        MainOffice game=new MainOffice(5, 4);
+        game.play(60);
+
+      //  System.out.println(br);
 
 
 

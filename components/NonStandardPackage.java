@@ -16,6 +16,17 @@ public class NonStandardPackage extends Package{
     }
     //methods 2.4.3
 
+
+    @Override
+    public String toString() {
+        return super.toString()+
+                ","+
+                "width=" + width +
+                ", length=" + length +
+                ", height=" + height +
+                ']';
+    }
+
     public int getHeight() {
         return height;
     }

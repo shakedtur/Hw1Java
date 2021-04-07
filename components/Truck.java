@@ -3,7 +3,7 @@ package components;
 import java.util.Arrays;
 import java.util.Random;
 //abstracts class
-public abstract class Truck {
+public abstract class Truck implements Node {
     //Fields 2.5.1
     private static int numTruck=2000;
     public int truckID;
@@ -12,15 +12,16 @@ public abstract class Truck {
     public boolean available;
     public int timeLeft;
     public Package[] ArratList;
+    protected int packNum=0;
 
     //Ctor 2.5.2
     public Truck(){
 //        Random r=new Random();
 //        truckModel="M"+(String)((int)(Math.random()*4));
 //        int first,middle,last;
-        truckID=numTruck++;
+        truckID=(numTruck++);
         Random r=new Random();
-        int n=r.nextInt(4);
+        int n=r.nextInt(5);
         truckModel=("M"+n);
         int f,m,l;
         f=r.nextInt(1000);//first
@@ -29,7 +30,12 @@ public abstract class Truck {
         licensePlate=(f+"-"+m+"-"+l);
         available=true;
         timeLeft=0;
-        ArratList=null;
+        packNum=5;
+        ArratList=new Package[packNum];
+        for (int i=0;i<ArratList.length;i++){
+            ArratList[i]=new Package();
+        }
+        packNum=0;
 
     }
     public Truck(String licensePlate,String truckModel){
@@ -38,19 +44,63 @@ public abstract class Truck {
         this.truckModel=truckModel;
         available=true;
         timeLeft=0;
-        ArratList=null;
+        packNum=5;
+        ArratList=new Package[packNum];
+        packNum=0;
+
     }
     //methods 2.5.3
     @Override
     public String toString() {
-        return "Truck[" +
+        return "["+
                 "truckID=" + truckID +
                 ", licensePlate='" + licensePlate + '\'' +
                 ", truckModel='" + truckModel + '\'' +
-                ", available=" + available +
-                ", timeLeft=" + timeLeft +
-                ", ArratList=" + Arrays.toString(ArratList) +
-                ']';
+                ", available=" + available ;
+                //", timeLeft=" + timeLeft +
+                //", ArratList=" + Arrays.toString(ArratList) +
+                //']';
+
+    }
+
+    @Override
+    public void collectPackage(Package p) {
+        if(packNum<ArratList.length) {
+            ArratList[packNum] = p;
+        }
+        else{
+            Package[] temp=new Package[ArratList.length+7];
+            for (int i=0;i<temp.length;i++){
+                if(i<ArratList.length)
+                    temp[i]=ArratList[i];
+                else if(i==ArratList.length)
+                    temp[i]=p;
+                else
+                    temp[i]=new Package();
+            }
+            ArratList=temp;
+        }
+
+    }
+
+    @Override
+    public void deliverPackage(Package p) {
+//        p.addTracking(this.timeLeft,this,Status.DELIVERED);
+//        this.available=true;
+        for(int i=0;ArratList[i]!=null && i<ArratList.length;i++){
+            if(ArratList[i].equals(p)) {
+                ArratList[i] = null;
+                if(this instanceof StandardTruck)
+                    packNum--;
+            }
+        }
+    }
+
+    @Override
+    public void work() {
+        if(!available && timeLeft>0){
+            timeLeft--;
+        }
     }
 
     public int getTruckID() {
