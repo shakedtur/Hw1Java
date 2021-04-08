@@ -12,9 +12,9 @@ public class NonStandardTruck extends Truck implements Node  {
     public NonStandardTruck() {
         super();
         Random rand=new Random();
-        int h=(rand.nextInt(4)+1)*100;
-        int w=(rand.nextInt(5)+1)*100;
-        int l=(rand.nextInt(10)+1)*100;
+        int h=(rand.nextInt(4)+3)*100;
+        int w=(rand.nextInt(5)+3)*100;
+        int l=(rand.nextInt(10)+3)*100;
         setHeight(h);
         setWidth(w);
         setLength(l);
@@ -33,23 +33,23 @@ public class NonStandardTruck extends Truck implements Node  {
     @Override
     public void collectPackage(Package p) {
 
-        p.addTracking(this,Status.DISTRIBUTION);//todo use Status.DISTRIBUTION
-        p.setStatus(Status.DISTRIBUTION);
-        int drivetime=Math.abs(ArratList[packNum].senderAddress.getStreet()-(ArratList[packNum].destinationAddress.getStreet()/10)%10)+1;
+        p.addTracking(this,Status.DISTRIBUTION8);//todo use Status.DISTRIBUTION
+        p.setStatus(Status.DISTRIBUTION8);
+        int drivetime=Math.abs((p.senderAddress.getStreet()-(p.destinationAddress.getStreet())/10)%10)+1;
         this.setTimeLeft(drivetime);
         super.collectPackage(p);
-        System.out.printf("NonStandardTruck"+ getTruckID()+"has collecting package"+p.getPackageID()+ ", time to arrive: "+drivetime);
+        System.out.println("NonStandardTruck "+ getTruckID()+" has collecting package"+p.getPackageID()+ ", time to arrive: "+drivetime);
 
     }
 
     @Override
     public void deliverPackage(Package p) {
-        super.deliverPackage(p);
-        p.setStatus(Status.DELIVERED);
-        p.addTracking(this,Status.DELIVERED);//todo use Status.DELIVERED
-        System.out.println("NonStandartTruck"+this.getTruckID()+"has delivered package"+ArratList[packNum].getPackageID()+"to the destination");
+        p.setStatus(Status.DELIVERED9);
+        p.addTracking(null,Status.DELIVERED9);//todo use Status.DELIVERED
+        System.out.println("NonStandartTruck"+this.getTruckID()+"has delivered package "+ArratList[packNum].getPackageID()+" to the destination");
         super.deliverPackage(p);//remove pack from the truck
         this.setAvailable(true);
+        super.deliverPackage(p);
 
 
     }
@@ -59,6 +59,7 @@ public class NonStandardTruck extends Truck implements Node  {
         // TODO צריך לבדוק באגים והדפסות לפי הקובץ
         super.work();
         if(!available){
+
             if(timeLeft==0){
                 if(this.ArratList[packNum].getStatus().equals(Status.COLLECTION2)){//deivery MODE
 //                    int drivetime=Math.abs(ArratList[packNum].senderAddress.getStreet()-ArratList[packNum].destinationAddress.getStreet()%10)+1;
@@ -68,7 +69,7 @@ public class NonStandardTruck extends Truck implements Node  {
                     this.collectPackage(this.ArratList[packNum]);
 
                 }
-                else if (this.ArratList[packNum].getStatus().equals(Status.DISTRIBUTION)){
+                else if (this.ArratList[packNum].getStatus().equals(Status.DISTRIBUTION8)){
                     this.deliverPackage(ArratList[packNum]);
 //                    System.out.println("NonStandartTruck"+this.getTruckID()+"has delivered package"+ArratList[packNum].getPackageID()+"to the destination");
 //                    ArratList[packNum].setStatus(Status.DELIVERED);
@@ -76,6 +77,9 @@ public class NonStandardTruck extends Truck implements Node  {
 //                    this.setAvailable(true);
                 }
 
+            }
+            else if (this.ArratList[packNum].getStatus().equals(Status.DISTRIBUTION8)){
+                System.out.println("NonStandardTruck "+ getTruckID()+" delivering package"+ArratList[packNum].getPackageID()+ ", time to arrive: "+getTimeLeft());
             }
 
         }

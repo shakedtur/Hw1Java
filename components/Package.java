@@ -37,10 +37,11 @@ public /*abstract*/ class Package {
     public void addTracking(Node node,Status status){
         int time=MainOffice.getClock();
         if(hopTrcking<ArrayList.length)
-            if(ArrayList[hopTrcking]!=null) {
-                ArrayList[hopTrcking++] = new Tracking(time, node, status);
+            if(ArrayList[hopTrcking+1]==null) {//next value is null?
+                ArrayList[hopTrcking+1] = new Tracking(time, node, status);
+                hopTrcking++;
             }
-        else{
+        else{//creating bigger array
             Tracking[] temp=new Tracking[(ArrayList.length+5)];
             for (int i=0;i<ArrayList.length;i++){
                 temp[i]=ArrayList[i];
@@ -53,8 +54,9 @@ public /*abstract*/ class Package {
     }
     public void printTracking(){
     //todo
-        for (int i=0;i<ArrayList.length && ArrayList[i]!=null;i++){
-            System.out.println(ArrayList[i].toString());
+        for (int i=0;i<ArrayList.length;i++){
+            if(ArrayList[i]!=null)
+                System.out.println(ArrayList[i].toString());
         }
 
 

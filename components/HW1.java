@@ -6,6 +6,9 @@ import components.Tracking;
 
 import java.util.Random;
 
+//home work 1 OOP
+//313276859
+//316005347
 
 public class HW1 {
 
@@ -57,6 +60,8 @@ public class HW1 {
 //
 //        }
 
+
+        //TODO Crating just small pack=> addPackage()
         MainOffice game=new MainOffice(5, 4);
         game.play(60);
 

@@ -65,11 +65,13 @@ public class Hub extends Branch implements Node{
         int totaLoadingW=0;
         for (int i=0;i<listPackages.length;i++){//scanning all packages do delivery
             Package p=listPackages[i];
-            if(p.getDestinationAddress().getZip()==Struck.getDestination().getBranchId()){
+
+            if(p!=null && p.getDestinationAddress().getZip()==Struck.getDestination().getBranchId()){
                 if(Struck.loadingPossible(totaLoadingW,p)){
                     totaLoadingW+=p.Weightpack();
                     Struck.collectPackage(p);
-                    p.setStatus(Status.BRANCH_TRANSPORT);
+                    p.setStatus(Status.HUB_TRANSPORT4);//todo use BRANCH_TRANSPORT6 or4444
+                    p.addTracking(Struck,Status.HUB_TRANSPORT4);
                     this.deliverPackage(p);//remove from HUB
                 }
 
@@ -99,7 +101,7 @@ public class Hub extends Branch implements Node{
                     Random r=new Random();
                     standTck.setTimeLeft(r.nextInt(10)+1);
                     standTck.setAvailable(false);
-                    System.out.println("StandardTruck " +standTck.getTruckID()+ "is on it's way to"+ standTck.getDestination().getBranchName()+", time to arrive:"+standTck.getTimeLeft());
+                    System.out.println("StandardTruck " +standTck.getTruckID()+ " is on it's way to "+ standTck.getDestination().getBranchName()+", time to arrive:"+standTck.getTimeLeft());
                 }
                 else if(listTrucks[i]instanceof NonStandardTruck){
                    NonStandardTruck Ntrck=((NonStandardTruck)listTrucks[i]);
@@ -113,7 +115,7 @@ public class Hub extends Branch implements Node{
                            Ntrck.setTimeLeft(r.nextInt(10)+1);
                            Ntrck.setAvailable(false);
                            this.deliverPackage(Nonpack);
-                           System.out.println("NonStandartTruck  "+Ntrck.getTruckID()+"has delivered package"+Nonpack.getPackageID()+" to the destination");
+                           //System.out.println("NonStandartTruck  "+Ntrck.getTruckID()+"has delivered package"+Nonpack.getPackageID()+" to the destination");
 
                        }
                    }
@@ -121,9 +123,9 @@ public class Hub extends Branch implements Node{
             }
         }
         //TODO remove notes
-//        for(int b=0;b<ArrayList.length;b++){
-//            ArrayList[b].work();
-//        }
+        for(int b=0;b<ArrayList.length;b++){
+            ArrayList[b].work();
+        }
 
 
 

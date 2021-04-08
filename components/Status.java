@@ -1,6 +1,6 @@
 package components;
 
-enum Status {CREATION1, COLLECTION2, BRANCH_STORAGE, HUB_TRANSPORT, HUB_STORAGE, BRANCH_TRANSPORT, DELIVERY, DISTRIBUTION, DELIVERED};
+enum Status {CREATION1, COLLECTION2, BRANCH_STORAGE3, HUB_TRANSPORT4, HUB_STORAGE5, BRANCH_TRANSPORT6, DELIVERY7, DISTRIBUTION8, DELIVERED9};
 
     /*1.3.	Status – enum שכולל רשימת סטטוסים התואמים לשלבי המשלוח. השלבים הם:
 יצרית חבילה (CREATION) – סטטוס התחלתי של כל חבילה שנוצרת.

@@ -1,7 +1,5 @@
 package components;
 
-import java.util.Arrays;
-
 public class Branch implements Node {
     //Fields 2.8.1
     private static int numBranch=-1;
@@ -67,8 +65,8 @@ public class Branch implements Node {
             }
 
         }
-        System.out.println("Pass");
-        System.out.println("Van "+ (listTrucks[currenTruck].getTruckID())+ "is collecting package"+p.getPackageID()+", time to arrive: "/*+this.listTrucks[currentPack].getTimeLeft()*/);
+       // System.out.println("Pass");
+        System.out.println("Van "+ (listTrucks[currenTruck].getTruckID())+ " is collecting package"+p.getPackageID()+", time to arrive: "+this.listTrucks[currentPack].getTimeLeft());
     }
 
     @Override
@@ -86,33 +84,38 @@ public class Branch implements Node {
     @Override
     public void work() {
         //todo check bugs
-        for (int k=0;k<listTrucks.length;k++){
+        for (int k=0;k<listTrucks.length;k++){//passing all trucks
             listTrucks[k].work();
         }
 
-        for(int i=0;listPackages[i]!=null&& i<listPackages.length;i++) {
+        for(int i=0;i<listPackages.length && listPackages[i]!=null;i++) {
             if (listPackages[i].getStatus() == Status.CREATION1) {
                 int j = 0;
-                while (listTrucks[j].available == false) {//search non busy truck
+                while (j<listTrucks.length && listTrucks[j].available == false) {//search non busy van
                     j++;
                 }
-                if (j == listTrucks.length)
-                    System.out.println("there is no avilavbe trucks"+getBranchName());
+                if (j == listTrucks.length) {
+                    //TODO erase printing
+                    System.out.println("there is no avilavbe trucks" + getBranchName());
+                    break;
+                }
                 currenTruck=j;
                 listTrucks[j].collectPackage(listPackages[i]);
-                System.out.println("TESTTTTTTTTTTTTTTTTTTTTTTTTTTVan "+ (listTrucks[currenTruck].getTruckID())+ "is collecting package"+listPackages[i].getPackageID()+", time to arrive: "+this.listTrucks[currentPack].getTimeLeft());
-
-                this.deliverPackage(listPackages[i]);//מסירה מהסניף
-
-                listPackages[i].setStatus(Status.COLLECTION2);
-                listPackages[i].addTracking(this,Status.COLLECTION2);
-                int calctime = (listPackages[i].getSenderAddress().getStreet() / 10) + 1;
+                System.out.println("Van "+ (listTrucks[currenTruck].getTruckID())+ "is collecting package"+listPackages[i].getPackageID()+", time to arrive: "+this.listTrucks[currentPack].getTimeLeft());
+                listPackages[i].setStatus(Status.COLLECTION2);//TODO use COLLECTION2
+                listPackages[i].addTracking(this,Status.BRANCH_STORAGE3);//TODO use BRANCH_STORAGE3
+                int calctime = (listPackages[i].getSenderAddress().getStreet() / 10)%10 + 1;
                 listTrucks[j].setTimeLeft(calctime);
                 listTrucks[j].setAvailable(false);
 
+                this.deliverPackage(listPackages[i]);//מסירה מהסניף
+
+
+
+
             }
             //change to minimize loops
-            else if(listPackages[i].getStatus()==Status.DELIVERY){
+            else if(listPackages[i].getStatus()==Status.DELIVERY7){
                 int m=0;
                 while (listTrucks[m].available == false) {
                     m++;
@@ -123,8 +126,8 @@ public class Branch implements Node {
                 listTrucks[m].collectPackage(listPackages[i]);
                 this.deliverPackage(listPackages[m]);
                 // change status package
-                listPackages[i].setStatus(Status.DISTRIBUTION);
-                listPackages[i].addTracking(this,Status.DISTRIBUTION);
+                listPackages[i].setStatus(Status.DISTRIBUTION8);//Todo use Status.DISTRIBUTION8
+                listPackages[i].addTracking(this,Status.DISTRIBUTION8);
 
                 int cltime=(listPackages[i].getDestinationAddress().getStreet()/10)+1;
                 listTrucks[m].setTimeLeft(cltime);

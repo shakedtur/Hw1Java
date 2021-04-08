@@ -30,17 +30,17 @@ public class Van extends Truck implements Node{
 
     @Override
     public void collectPackage(Package p) {
-        p.setStatus(Status.BRANCH_STORAGE);
-        p.addTracking(this,Status.BRANCH_STORAGE);//todo  use Status.BRANCH_STORAGE
-        System.out.printf("Van"+ getTruckID()+"has collecting package"+p.getPackageID()+ "and arrived back to branch"+p.getSenderAddress().getZip());
+        p.setStatus(Status.BRANCH_STORAGE3);
+        p.addTracking(this,Status.COLLECTION2);//todo  use Status.BRANCH_STORAGE
+        System.out.println("Van "+ getTruckID()+" has collecting package "+p.getPackageID()+ " and arrived back to branch "+(int)(p.getSenderAddress().getZip()));
         //ArratList[packNum]=p;
         super.collectPackage(p);
     }
 
     @Override
     public void deliverPackage(Package p) {
-        p.addTracking(null,Status.DELIVERED);//todo  use Status.DELIVERED
-        p.setStatus(Status.DELIVERED);
+        p.addTracking(null,Status.DISTRIBUTION8);//todo  use Status.DELIVERED
+        p.setStatus(Status.DELIVERED9);
         if(ArratList[packNum].equals(p)) {
             System.out.printf("Van %d has delivered package %d to the destination\n", getTruckID(), p.getPackageID());
             ArratList[packNum] = null;
@@ -66,14 +66,16 @@ public class Van extends Truck implements Node{
                     this.collectPackage(ArratList[packNum]);
                     //this.setAvailable(true);
                 }
-                if(ArratList[packNum].getStatus()==Status.DISTRIBUTION){
+                else if(ArratList[packNum].getStatus()==Status.DISTRIBUTION8){
                     if(ArratList[packNum] instanceof SmallPackage){
                         if(((SmallPackage) ArratList[packNum]).getacknowledge()){
-                            System.out.printf("Small package"+ArratList[packNum].getPackageID()+" with notification arrived to it's destination");
+                            System.out.println("Small package"+ArratList[packNum].getPackageID()+" with notification arrived to it's destination");
                         }
                     }
-                    ArratList[packNum].addTracking(this,Status.DISTRIBUTION);//TODO may need to delete use Status.DISTRIBUTION
-                    //ArratList[packNum].setStatus(Status.DELIVERED);
+                    ArratList[packNum].addTracking(this,Status.DISTRIBUTION8);//TODO may need to delete use Status.DISTRIBUTION
+                    ArratList[packNum].addTracking(null,Status.DELIVERED9);//TODO may need to delete use Status.DISTRIBUTION
+
+                    ArratList[packNum].setStatus(Status.DELIVERED9);
                     this.deliverPackage(ArratList[packNum]);//remove pack from pack list
                     //System.out.println("Van"+this.getTruckID()+ "is delivering package"+this.ArratList[packNum].packageID+", time left:"+ this.timeLeft);
                 }

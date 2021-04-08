@@ -5,7 +5,7 @@ import java.util.Random;
 public class MainOffice {
     //fields 2.9.4
     public static int clock;
-    public Hub hub;
+    public static Hub hub;
     public Package[] ArrayList;
     private int amountPack;
     //Ctor2.9.5
@@ -38,24 +38,34 @@ public class MainOffice {
         //TODO
         for(Package pack: this.ArrayList){
             if(pack!=null) {
-                System.out.println("Tracking " + pack.toString());
-                pack.printTracking();
+                if(pack instanceof SmallPackage) {
+                    System.out.println("Tracking Small" + pack.toString());
+                    pack.printTracking();
+                }
+                else if(pack instanceof StandardPackage) {
+                    System.out.println("Tracking Standard" + pack.toString());
+                    pack.printTracking();
+                }
+                if(pack instanceof NonStandardPackage) {
+                    System.out.println("Tracking NonStandard" + pack.toString());
+                    pack.printTracking();
+                }
             }
         }
     }
 
     public void tick(){
         System.out.println(clockString());
-        this.clock++;
 //        for (int i=0;i<hub.ArrayList.length;i++){
 //
 //            //כל הסניפים תמרכ\ מיון ורכבים מבצעים יחידת עבודת אחת work
 //        }
-        hub.work();
-        if((this.clock%5==0)||clock==0){
-
+        hub.work();//todo need to change sec create new pack
+        if(getClock()==0 ||(this.clock%5==0)){
             addPackage();
         }
+        this.clock++;
+
     }
     public void addPackage(){
         Random rand=new Random();

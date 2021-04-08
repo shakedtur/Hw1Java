@@ -33,6 +33,7 @@ public class StandardTruck extends Truck implements Node {
     public void deliverPackage(Package p) {
 
         super.deliverPackage(p);
+        packNum--;
 
     }
 
@@ -53,33 +54,60 @@ public class StandardTruck extends Truck implements Node {
         if(!available){
             super.work();
             if(timeLeft==0){
-               System.out.println("StandardTruck"+getTruckID()+"arrived to Brunch"+getDestination().getBranchId());
+                System.out.println("StandardTruck"+getTruckID()+"arrived to Brunch"+getDestination().getBranchId());
                 for (int i=0;i<ArratList.length;i++){//finish at HUB
-                    if(ArratList[i].getStatus()==Status.HUB_TRANSPORT /*destination.getBranchName().equals("HUB"*/){
-                        ArratList[i].addTracking(this,Status.HUB_TRANSPORT);
-                        ArratList[i].setStatus(Status.HUB_STORAGE);
+                    if(ArratList[i].getStatus()==Status.BRANCH_STORAGE3 /*destination.getBranchName().equals("HUB"*/){
+                        ArratList[i].addTracking(this,Status.HUB_TRANSPORT4);//TODO use HUB_TRAN4
+                        ArratList[i].setStatus(Status.HUB_STORAGE5);//TODO use HUB_STOR5
+                        destination.collectPackage(ArratList[i]);
                         deliverPackage(ArratList[i]);
-                        this.setAvailable(true);
+                        //if(destination instanceof hub)
+                            //destination.deliverPackage(ArratList[i]);
+                        System.out.println("StandardTruck"+getTruckID()+" UNloaded packages at "+destination.getBranchName());
+
+                        //this.setAvailable(true);
+
                         loadingWeight=0;
+
                     }
-                    else if(ArratList[i].getStatus()==Status.BRANCH_TRANSPORT) {//finish at local brunch
+                    else if(ArratList[i].getStatus()==Status.HUB_STORAGE5) {//finish at local brunch
                         for(int k=0;k<destination.getListPackages().length && loadingPossible(loadingWeight, destination.getPack(k));k++){
                             this.collectPackage(destination.getPack(k));
-                            this.ArratList[i].setStatus(Status.DELIVERY);
-                            this.ArratList[i].addTracking(this,Status.BRANCH_TRANSPORT);
+                            this.ArratList[i].setStatus(Status.DELIVERY7);
+                            this.ArratList[i].addTracking(this,Status.BRANCH_TRANSPORT6);
                             destination.deliverPackage(destination.getPack(k));
+                            //System.out.println("StandardTruck"+getTruckID()+"arrived to Brunch"+getDestination().getBranchId());
 
                             System.out.println("StandardTruck"+getTruckID()+" loaded packages at "+destination.getBranchName());
-
                         }
-
-                        setTimeLeft((int)Math.random()*7+1);
-                        System.out.println("StandardTruck"+getTruckID()+"is on it's way to the"+destination.getBranchName()+", time to arrive:"+this.getTimeLeft());
-
                     }
 
+
                 }
+
+                if(getDestination()instanceof Hub){
+                    setAvailable(true);
+                }
+                else{
+                    for(int b=0;b<destination.getListPackages().length && loadingPossible(loadingWeight, destination.getPack(b));b++){
+                        if(this.ArratList[b].getStatus()==Status.BRANCH_STORAGE3){
+                            collectPackage(destination.getPack(b));
+                            ArratList[b].setStatus(Status.HUB_TRANSPORT4);//todo use HUB_TRANSPORT4
+                            ArratList[b].addTracking(this,Status.HUB_TRANSPORT4);
+                            destination.deliverPackage(destination.getPack(b));//remove from brunch
+                        }
+                    }
+                    System.out.println("StandardTruck"+getTruckID()+" loaded packages at "+destination.getBranchName());
+                    setDestination(MainOffice.hub);
+
+                    setTimeLeft(((int)Math.random())*7+1);
+                    //System.out.println("StandardTruck!!!!!"+getTruckID()+" is on it's way to the "+destination.getBranchName()+", time to arrive:"+this.getTimeLeft());
+
+                }
+
             }
+
+
         }
     }
 

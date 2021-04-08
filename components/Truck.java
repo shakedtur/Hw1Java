@@ -87,7 +87,7 @@ public abstract class Truck implements Node {
     public void deliverPackage(Package p) {
 //        p.addTracking(this.timeLeft,this,Status.DELIVERED);
 //        this.available=true;
-        for(int i=0;ArratList[i]!=null && i<ArratList.length;i++){
+        for(int i=0;i<ArratList.length && ArratList[i]!=null  ;i++){
             if(ArratList[i].equals(p)) {
                 ArratList[i] = null;
                 if(this instanceof StandardTruck)
