@@ -7,10 +7,13 @@ public class MainOffice {
 	private static int clock=0;
 	private static Hub hub;
 	private ArrayList<Package> packages=new ArrayList<Package>();
+	private boolean stop=false;
+	private int packageNuminGame;
 	
-	public MainOffice(int branches, int trucksForBranch) {
+	public MainOffice(int branches, int trucksForBranch,int numOfPackages) {
 		addHub(trucksForBranch);
 		addBranches(branches, trucksForBranch);
+		packageNuminGame=numOfPackages;
 		System.out.println("\n\n========================== START ==========================");
 
 	}
@@ -25,10 +28,14 @@ public class MainOffice {
 		return clock;
 	}
 
-	
-	public void play(int playTime) {	
+
+
+
+	public void play(int playTime) {
 		for (int i=0; i<playTime; i++) {
-			tick();
+//			if(!stop) {
+				tick();
+	//		}
 		}
 		System.out.println("\n========================== STOP ==========================\n\n");
 		printReport();
@@ -56,7 +63,7 @@ public class MainOffice {
 	
 	public void tick() {
 		System.out.println(clockString());
-		if (clock%5==0)
+		if (packages.size()<=packageNuminGame && clock%5==0)
 			addPackage();
 		hub.work();
 		for (Branch b: hub.getBranches()) {
@@ -113,5 +120,21 @@ public class MainOffice {
 		
 		this.packages.add(p);
 		
+	}
+
+	public boolean isStop() {
+		return stop;
+	}
+
+	public void setStop(boolean stop) {
+		this.stop = stop;
+	}
+
+	public int getPackageNuminGame() {
+		return packageNuminGame;
+	}
+
+	public void setPackageNuminGame(int packageNuminGame) {
+		this.packageNuminGame = packageNuminGame;
 	}
 }

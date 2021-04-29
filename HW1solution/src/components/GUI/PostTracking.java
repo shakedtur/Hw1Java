@@ -1,4 +1,6 @@
 package components.GUI;
+import components.MainOffice;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -28,7 +30,7 @@ import java.awt.event.ActionListener;
 /**
  * An object of this department manages the entire system, operates a clock, the branches and vehicles
  * creates the packages (simulates customers) and transfers them to the appropriate branches.
- * @version 2.0 09 April 2011
+ * @version 2.0 09 April 2021
  * @author  Shaked Turgeman 313276859, Lior Daichman 316005347
  */
 public class PostTracking extends JFrame implements ActionListener {
@@ -36,9 +38,13 @@ public class PostTracking extends JFrame implements ActionListener {
     //valuse
     private JPanel buttonRow;
     CreatePostDialog createPostDialog;
+    MainOffice starGame;
+    private boolean flagStart=false;
     private CreatePostPanel panel;
     private JButton[] btmButtons;
     private String[] btmNameStrings={"Create System","start","stop","Resume","All packages info","Branch info"};
+    private int brunches,trucks,packages;
+    MainOffice game;
 
     //ctor
     public PostTracking(){
@@ -52,6 +58,7 @@ public class PostTracking extends JFrame implements ActionListener {
         setVisible(true);
 
         createPostDialog=new CreatePostDialog(panel);
+        createPostDialog.setSize(400,600);
         panel=new CreatePostPanel(this);
     }
 
@@ -70,13 +77,30 @@ public class PostTracking extends JFrame implements ActionListener {
 
     }
 
+    public void setFlagStart(boolean flagStart) {
+        this.flagStart = flagStart;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==btmButtons[0]){
             //TODO
             createPostDialog.setVisible(true);
+            setFlagStart(true);
+        }
+        if(e.getSource()==btmButtons[1]){
 
-
+            starGame=createPostDialog.getMainOfficeGame();
+            brunches=createPostDialog.getBrunchnum();
+            trucks=createPostDialog.getTrucksnum();
+            packages=createPostDialog.getPackagenum();
+            if(flagStart){
+                flagStart=false;
+            starGame.play(60);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "the System already started", ":)", JOptionPane.NO_OPTION);
+            }
         }
     }
 }
