@@ -48,7 +48,7 @@ private JButton cancelButton;
         //-------Slider--------
         //brunch slider
         dialogPanl.setLayout(new BoxLayout(dialogPanl,BoxLayout.Y_AXIS));
-        brnchslider=new JSlider(JSlider.HORIZONTAL,1,10,5);
+        brnchslider=new JSlider(JSlider.HORIZONTAL,1,10,1);
         brnchslider.setPaintTicks(rootPaneCheckingEnabled);
         brnchslider.setMinorTickSpacing(1);
         brnchslider.setMajorTickSpacing(1);
@@ -62,7 +62,7 @@ private JButton cancelButton;
         dialogPanl.add(brnchslider);//adding slider
 
         //truckslider
-        truckslider=new JSlider(JSlider.HORIZONTAL,1,10,4);
+        truckslider=new JSlider(JSlider.HORIZONTAL,1,10,2);
         truckslider.setMajorTickSpacing(1);
         truckslider.setPaintTicks(true);
         truckslider.setPaintLabels(true);

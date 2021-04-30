@@ -9,7 +9,7 @@ public class MainOffice {
 	private ArrayList<Package> packages=new ArrayList<Package>();
 	private boolean stop=false;
 	private int packageNuminGame;
-	
+	private int packNumExsist=0;
 	public MainOffice(int branches, int trucksForBranch,int numOfPackages) {
 		addHub(trucksForBranch);
 		addBranches(branches, trucksForBranch);
@@ -63,8 +63,10 @@ public class MainOffice {
 	
 	public void tick() {
 		System.out.println(clockString());
-		if (packages.size()<=packageNuminGame && clock%5==0)
+		if (packages.size()<=packageNuminGame && clock%5==0){
 			addPackage();
+			packNumExsist++;
+		}
 		hub.work();
 		for (Branch b: hub.getBranches()) {
 			b.work();
@@ -120,6 +122,14 @@ public class MainOffice {
 		
 		this.packages.add(p);
 		
+	}
+
+	public ArrayList<Package> getPackages() {
+		return packages;
+	}
+
+	public int getPackNumExsist() {
+		return packNumExsist;
 	}
 
 	public boolean isStop() {
