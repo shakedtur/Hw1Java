@@ -1,10 +1,12 @@
 package components.GUI;
-
+import components.GUI.PostTracking;
 import components.MainOffice;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
 
 import javax.swing.*;
 
@@ -16,32 +18,30 @@ import javax.swing.*;
 
 public class CreatePostDialog extends JDialog {
 public MainOffice mainOfficeGame;
-private CreatePostPanel createPostPanel;
-private JPanel dialogPanl;
-private JPanel buttonsPnl;
 
-private JSlider brnchslider;
-private int brunchnum;
-
-private JSlider truckslider;
-private int trucksnum;
-
-private JSlider packslider;
-private int packagenum;
-
-
-private JButton okButton;
-private JButton cancelButton;
+public CreatePostPanel createPostPanel;
+public JPanel dialogPanl;
+public JPanel buttonsPnl;
+public JSlider brnchslider;
+public int brunchnum;
+public JSlider truckslider;
+public int trucksnum;
+public JSlider packslider;
+public int packagenum;
+public JButton okButton;
+public JButton cancelButton;
 
 //Ctor dialog
     public CreatePostDialog(CreatePostPanel createPostPanel){
         setTitle("Create Post system dialog");
         this.createPostPanel=createPostPanel;
+        
         dialogPanl=new JPanel();
         dialogPanl.setVisible(true);
-
         buttonsPnl =new JPanel();
-        //setSize(600,400);
+        
+       
+//        createPostPanel.setSize(1200,700);
         //setLocationRelativeTo(null);
         //constructAddAnimalPanel();
 
@@ -128,5 +128,7 @@ private JButton cancelButton;
     public MainOffice getMainOfficeGame() {
         return mainOfficeGame;
     }
+    
+
 }//end of create postDialog
 

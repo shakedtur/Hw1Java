@@ -1,5 +1,7 @@
 package components.GUI;
 import components.MainOffice;
+
+import components.GUI.CreatePostDialog;
 import components.Package;
 
 import java.awt.BorderLayout;
@@ -9,9 +11,12 @@ import java.awt.Graphics2D;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import java.awt.Color;
+
 
 /**
  * An object of this department manages the entire system, operates a clock, the branches and vehicles
@@ -20,8 +25,9 @@ import javax.swing.*;
  * @author  Shaked Turgeman 313276859, Lior Daichman 316005347
  */
 public class PostTracking extends JFrame implements ActionListener {
-
     //valuse
+	private int NumberOfBrunchesToDraw = 1;
+	private int NumberOfPackToDraw;
     private JPanel buttonRow;
     private JPanel bourdpnl;
     CreatePostDialog createPostDialog;
@@ -36,16 +42,15 @@ public class PostTracking extends JFrame implements ActionListener {
     private JScrollPane scrollPane;
     private int mousecount=0;
     private static final String[] columnNames={"Package Id","Sender","Destination","Priority","Status","Type"};
-    //MainOffice game;
+
 
     //ctor
     public PostTracking(){
         super("Post tracking system");
-
         setSize(1200,700);
         bourdpnl=new JPanel();
         buttonRowCreator();
-        add(new FillWithGraphics());
+        //add(new FillWithGraphics());
         add(bourdpnl,BorderLayout.NORTH);
         add(buttonRow,BorderLayout.SOUTH);
         setLocationRelativeTo(null);//open screen in center
@@ -56,7 +61,9 @@ public class PostTracking extends JFrame implements ActionListener {
         createPostDialog.setSize(400,600);
         panel=new CreatePostPanel(this);
     }
+    
 
+	public static final Color DarkGreen = new Color(0,102,0);
 
     //methods
     private void buttonRowCreator(){
@@ -75,26 +82,6 @@ public class PostTracking extends JFrame implements ActionListener {
     public void setFlagStart(boolean flagStart) {
         this.flagStart = flagStart;
     }
-    public class FillWithGraphics extends JPanel {
-
-        @Override
-        public void paintComponent(Graphics g) {
-            g.fillOval(30, 30, 20, 50);
-
-            g.setColor(Color.magenta);
-            g.fillRect(60, 60, 35, 35);
-
-            g.setColor(Color.yellow);
-            g.fillOval(150, 50, 30, 30);
-            g.setColor(Color.red);
-            g.drawOval(150, 50, 30, 30);
-
-            g.setColor(Color.red);
-            g.drawOval(150, 100, 30, 30);
-            g.setColor(Color.yellow);
-            g.fillOval(150, 100, 30, 30);
-        }
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -103,14 +90,19 @@ public class PostTracking extends JFrame implements ActionListener {
             createPostDialog.setVisible(true);
             setFlagStart(true);
         }
-
+        	
             if (e.getSource() == btmButtons[1]) {//start button
                 starGame = createPostDialog.getMainOfficeGame();
                 brunches = createPostDialog.getBrunchnum();
                 trucks = createPostDialog.getTrucksnum();
                 packages = createPostDialog.getPackagenum();
+                NumberOfBrunchesToDraw = brunches;
 
-                //drowBoard()
+                add(new FillWithGraphics());
+
+
+                repaint();
+                revalidate();
                 if (flagStart) {
                     flagStart = false;
                     starGame.play(60);
@@ -167,4 +159,45 @@ public class PostTracking extends JFrame implements ActionListener {
 //        }
         return data;
     }
+
+
+
+    public class FillWithGraphics extends JPanel {
+    	
+
+        @Override
+        public void paintComponent(Graphics g) {
+            	int YcoordinateBrunches = 30;
+            	int YcoordinateLine = 40;
+            	int YcoordinateLineDistance = 215;
+            	for (int i = 0; i<NumberOfBrunchesToDraw; i++) {
+    					g.setColor(Color.cyan);
+    					g.fillRect(80, YcoordinateBrunches, 60, 20);
+    					g.setColor(Color.green);
+    					g.drawLine(120,YcoordinateLine,1100,YcoordinateLineDistance);
+    					YcoordinateBrunches = YcoordinateBrunches + 50;
+                		YcoordinateLine = YcoordinateLine + 50;
+                		YcoordinateLineDistance = YcoordinateLineDistance + 20;
+                    	g.setColor(DarkGreen);
+                    	g.fillRect(1100, 200, 40, 200);
+                	}
+
+                int xLocation=150;
+            	for(Package p:starGame.getPackages()){
+                    //drawing sender Packages(UP)
+                    g.setColor(Color.RED);
+                    g.fillOval(xLocation,50,30,30);
+                    //drawing destnation Packages(DOWN)
+                    g.setColor(Color.blue);
+                    g.fillOval(xLocation,500,30,30);
+                    xLocation+=getWidth()/starGame.getPackNumExsist();
+                }
+
+        }
+    }
+
+
+
+
+
 }
